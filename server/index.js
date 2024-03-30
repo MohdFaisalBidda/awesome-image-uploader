@@ -20,21 +20,41 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 
+// app.get("/images", (req, res) => {
+//   const params = {
+//     Bucket: process.env.BUCKET,
+//   };
+
+//   s3.listObjects(params, (err, data) => {
+//     if (err) {
+//       console.log("Error listing objects from S3:", err);
+//       res.status(500).send("Error fetching images!");
+//     } else {
+//       const images = data.Contents.map((object) => ({
+//         key: object.Key,
+//         imageUrl: `https://${params.Bucket}.s3.amazonaws.com/${object.Key}`,
+//       }));
+//       res.status(200).send(images);
+//     }
+//   });
+// });
+
 app.get("/images", (req, res) => {
   const params = {
     Bucket: process.env.BUCKET,
+    // expires: 300,
   };
-
-  s3.listObjects(params, (err, data) => {
+  s3.listObjects({ Bucket: params.Bucket }, (err, data) => {
     if (err) {
-      console.log("Error listing objects from S3:", err);
-      res.status(500).send("Error fetching images!");
+      console.log(err);
+      res.status(500).send("Error listing objects from s3 bucket");
     } else {
-      const images = data.Contents.map((object) => ({
-        key: object.Key,
-        imageUrl: `/${object.Key}`,
-      }));
-      res.status(200).send(images);
+      const signedUrls = data.Contents.map((obj) => {
+        const key = obj.Key;
+        const url = s3.getSignedUrl("getObject", { ...params, Key: key });
+        return { key, url };
+      });
+      res.json(signedUrls);
     }
   });
 });
