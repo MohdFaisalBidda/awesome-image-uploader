@@ -137,7 +137,7 @@ function App() {
           </div>
         )}
       </div>
-      <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-2 w-full px-20 mt-20">
+      <div className="grid grid-cols-1 gap-y-20 lg:grid-cols-2 w-full px-20 mt-20 pb-20">
         {images.map((item, index) => (
           <div key={index} className="w-full items-center justify-center flex">
             {!loading ? (
