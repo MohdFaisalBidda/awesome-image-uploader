@@ -71,6 +71,7 @@ function App() {
       setUploadProgress(100);
       console.log("Image Uploaded successfully", res.data);
       setImages(prevImages => [...prevImages, { url: res.data.imageUrl }]);
+      setFile(null);
     } catch (error) {
       console.log("Error uploading image:", error);
     }
@@ -89,7 +90,7 @@ function App() {
       }
     };
     getImages();
-  }, []);
+  }, [file]);
 
   return (
     <div className="">
