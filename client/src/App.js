@@ -70,7 +70,7 @@ function App() {
       clearInterval(interval);
       setUploadProgress(100);
       console.log("Image Uploaded successfully", res.data);
-      setImages([...images, { url: res.data.imageUrl }]);
+      setImages(prevImages => [...prevImages, { url: res.data.imageUrl }]);
     } catch (error) {
       console.log("Error uploading image:", error);
     }
