@@ -14,8 +14,8 @@ const upload = multer();
 
 AWS.config.update({
   credentials: {
-    accessKeyId: process.env.ACCESSKEYID,
-    secretAccessKey: process.env.SECRETACCESSKEY,
+    // accessKeyId: process.env.ACCESSKEYID,
+    // secretAccessKey: process.env.SECRETACCESSKEY,
   },
   region: process.env.REGION,
 });
